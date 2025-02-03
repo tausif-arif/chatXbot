@@ -12,59 +12,25 @@ st.set_page_config(
     page_title="J.A.R.V.I.S. MK XLIX",
     page_icon="⚡",
     layout="wide",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="expanded",
 )
 
 # Enhanced Custom CSS for JARVIS UI
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Electrolize&family=Orbitron:wght@500&display=swap');
-    
-    :root {
-        --jarvis-gold: #FFD700;
+  @import url('https://fonts.googleapis.com/css2?family=Electrolize&family=Orbitron:wght@500&display=swap');
+    /* Global Background */
+     :root {
+        --jarvis-gold: #ffcc00;
         --jarvis-blue: #00f7ff;
         --hud-background: rgba(10, 10, 46, 0.95);
     }
-    
-    .main {
-        background: linear-gradient(160deg, #0a0a2e 40%, #001144 100%);
-        color: var(--jarvis-gold);
-        position: relative;
-        overflow: hidden;
+    .stApp {
+        background-color: #0a0a1a;
+        color: #ffcc00;
     }
-    
-    .main::before {
-        content: '';
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: 
-            repeating-linear-gradient(
-                90deg,
-                rgba(255, 215, 0, 0.03) 0px,
-                transparent 2px,
-                transparent 150px
-            ),
-            repeating-linear-gradient(
-                180deg,
-                rgba(255, 215, 0, 0.03) 0px,
-                transparent 2px,
-                transparent 150px
-            );
-        pointer-events: none;
-    }
-    
-    .stChatInput input {
-        background: rgba(0, 0, 34, 0.8) !important;
-        color: var(--jarvis-gold) !important;
-        border: 1px solid var(--jarvis-gold) !important;
-        font-family: 'Orbitron', sans-serif;
-        backdrop-filter: blur(5px);
-    }
-    
-    .jarvis-header-container {
+    /* JARVIS Header Styling */
+        .jarvis-header-container {
         position: relative;
         width: 100%;
         height: 120px;
@@ -111,7 +77,7 @@ st.markdown("""
         font-family: 'Orbitron', sans-serif;
         font-size: 2.8em;
         text-align: center;
-        color: var(--jarvis-gold);
+        color: #FFD700;
         text-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
         animation: textGlow 2s infinite;
         position: relative;
@@ -127,33 +93,22 @@ st.markdown("""
         opacity: 0.8;
         letter-spacing: 2px;
     }
-    
-    .assistant-message {
-        position: relative;
-        background: rgba(0, 8, 34, 0.9);
-        border-left: 3px solid var(--jarvis-gold);
-        padding: 1.2rem;
-        margin: 1rem 0;
-        border-radius: 8px;
-        box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
-        backdrop-filter: blur(5px);
+
+    @keyframes hover-effect {
+        0% { transform: translateY(0); }
+        100% { transform: translateY(-10px); }
     }
-    
-    .assistant-message::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(
-            90deg,
-            transparent,
-            rgba(255, 215, 0, 0.1),
-            transparent
-        );
-        animation: shimmer 2s infinite;
+
+    .jarvis-header {
+        font-size: 3rem;
+        font-weight: bold;
+        color: 2px solid var(--jarvis-gold);
+        font-family: 'Orbitron', sans-serif;
     }
+
+    /* Chat Message Styling */
+
+    
     
     .typing-indicator {
         display: inline-block;
@@ -170,8 +125,9 @@ st.markdown("""
         border-radius: 50%;
         animation: typing 1.4s infinite;
         box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        animation: typing 0.8s infinite alternate;
+
     }
-    
     /* Enhanced Animations */
     @keyframes logoSpin {
         0% { transform: rotate(0deg); }
@@ -199,8 +155,11 @@ st.markdown("""
         0%, 100% { transform: translateY(0); opacity: 0.5; }
         50% { transform: translateY(-5px); opacity: 1; }
     }
-    
-    /* Sidebar Styling */
+   
+    /* Typing Animation */
+   
+
+   /* Sidebar Styling */
     .stSidebar {
         background: rgba(0, 0, 34, 0.95);
         border-right: 1px solid var(--jarvis-gold);
@@ -213,24 +172,49 @@ st.markdown("""
     .stSidebar [data-testid="stMetricDelta"] {
         color: var(--jarvis-blue) !important;
     }
-    
-    /* Scrollbar Styling */
-    ::-webkit-scrollbar {
-        width: 8px;
-        height: 8px;
+    /* JARVIS Animated Logo */
+    @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
     }
-    
-    ::-webkit-scrollbar-track {
-        background: rgba(0, 0, 34, 0.95);
+
+    @keyframes pulse {
+        0% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.8); }
+        50% { box-shadow: 0 0 20px rgba(255, 215, 0, 1); }
+        100% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.8); }
     }
-    
-    ::-webkit-scrollbar-thumb {
-        background: var(--jarvis-gold);
-        border-radius: 4px;
+
+    .jarvis-logo-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 120px;
+        margin-bottom: 20px;
     }
-    
-    ::-webkit-scrollbar-thumb:hover {
-        background: #ffd900;
+
+    .jarvis-logo {
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        border: 3px solid #FFD700;
+        animation: spin 8s linear infinite, pulse 2s infinite alternate;
+        background: radial-gradient(circle, rgba(255, 215, 0, 0.3) 30%, 70%);
+    }
+
+    .jarvis-text {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 2.8em;
+        color: #FFD700;
+        text-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+    }
+    .assistant-message {
+        position: relative;
+        background: rgba(0, 8, 34, 0.9);
+        border-left: 3px solid var(--jarvis-gold);
+        padding: 1.2rem;
+        margin: 1rem 0;
+        border-radius: 8px;
+        backdrop-filter: blur(5px);
     }
 </style>
 
@@ -267,29 +251,153 @@ def typing_animation():
     """
 
 # Sidebar configuration
+# def sidebar():
+#     with st.sidebar:
+#         st.title("▲ TACTICAL HUD")
+#         st.markdown("---")
+        
+#         col1, col2 = st.columns(2)
+#         with col1:
+#             st.metric("Power Core", "400%", "+2.4%")
+#             st.metric("Neural Load", "34%", "3ms latency")
+            
+#         with col2:
+#             st.metric("Nanite Integrity", "98%", "-2%")
+#             st.metric("Shield Capacity", "100%", "Nominal")
+        
+#         st.markdown("---")
+#         st.markdown("**THREAT ANALYSIS**")
+#         st.code("No hostiles detected\nAirspace clear\nGround stability: 98%", language="text")
+        
+#         st.session_state.model = st.selectbox(
+#             "NEURAL ARCHITECTURE",
+#             ["llama-3.3-70b-versatile","mixtral-8x7b-32768", "llama2-70b-4096", "gemma-7b-it","deepseek-r1-distill-llama-70b"],
+#             index=0
+#         )
+
+
+
+
+# def sidebar():
+#     with st.sidebar:
+#         st.markdown("<h1 style='text-align: center; color: cyan;'>▲ TACTICAL HUD</h1>", unsafe_allow_html=True)
+#         st.markdown("<hr style='border: 1px solid cyan;'>", unsafe_allow_html=True)
+
+#         col1, col2 = st.columns(2)
+#         with col1:
+#             st.metric("⚡ Power Core", "400%", "+2.4%")
+#             st.metric("🧠 Neural Load", "34%", "3ms latency")
+
+#         with col2:
+#             st.metric("🛠 Nanite Integrity", "98%", "-2%")
+#             st.metric("🛡 Shield Capacity", "100%", "Nominal")
+
+#         st.markdown("<hr style='border: 1px solid cyan;'>", unsafe_allow_html=True)
+
+#         # **Threat Analysis Panel** with a Wakandan tech feel
+#         st.markdown("<h3 style='color: cyan;'>🔍 THREAT ANALYSIS</h3>", unsafe_allow_html=True)
+#         st.markdown("""
+#         <div style="
+#             border-radius: 10px; 
+#             background-color: rgba(0, 255, 255, 0.1); 
+#             padding: 10px; 
+#             color: cyan;
+#             font-family: 'Courier New', monospace;">
+#         <strong>No hostiles detected</strong><br>
+#         Airspace: <span style='color: lime;'>CLEAR</span><br>
+#         Ground Stability: <span style='color: lime;'>98%</span>
+#         </div>
+#         """, unsafe_allow_html=True)
+
+#         st.markdown("<hr style='border: 1px solid cyan;'>", unsafe_allow_html=True)
+
+#         # **Neural Architecture Selection** - Looks like an AI Core selection panel
+#         st.markdown("<h3 style='color: cyan;'>🧩 NEURAL ARCHITECTURE</h3>", unsafe_allow_html=True)
+#         st.session_state.model = st.selectbox(
+#             "",
+#             ["llama-3.3-70b-versatile", "mixtral-8x7b-32768", "llama2-70b-4096", "gemma-7b-it", "deepseek-r1-distill-llama-70b"],
+#             index=0
+#         )
+
+#         # Add a subtle footer or system status update
+#         st.markdown("<hr style='border: 1px solid cyan;'>", unsafe_allow_html=True)
+#         st.markdown("<p style='text-align: center; color: cyan;'>SYSTEM ONLINE ⬤</p>", unsafe_allow_html=True)
+
+
 def sidebar():
     with st.sidebar:
-        st.title("▲ TACTICAL HUD")
-        st.markdown("---")
-        
+        st.markdown("""
+        <style>
+            .hud-title {
+                text-align: center;
+                color: #FFD700;
+                text-shadow: 0px 0px 10px #FFD700;
+                font-size: 1.5em;
+            }
+
+            .hud-box {
+                background: rgba(255, 215, 0, 0.1);
+                border: 1px solid #FFD700;
+                border-radius: 8px;
+                padding: 10px;
+                box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            }
+
+            .threat-panel {
+                font-family: 'Courier New', monospace;
+                font-size: 1.1em;
+                padding: 12px;
+                border-radius: 8px;
+                background: rgba(252, 255, 50, 0.2);
+                color: #FFD700;
+                text-shadow: 0px 0px 10px #FFD700;
+            }
+        </style>
+
+        <h1 class="hud-title">▲ TACTICAL HUD</h1>
+        <hr style="border: 1px solid #b39ddb;">
+        """, unsafe_allow_html=True)
+
+        # Live Stats  
         col1, col2 = st.columns(2)
         with col1:
-            st.metric("Power Core", "400%", "+2.4%")
-            st.metric("Neural Load", "34%", "3ms latency")
-            
+            st.metric("⚡ Power Core", "400%", "+2.4%")
+            st.metric("🧠 Neural Load", "34%", "3ms latency")
         with col2:
-            st.metric("Nanite Integrity", "98%", "-2%")
-            st.metric("Shield Capacity", "100%", "Nominal")
-        
-        st.markdown("---")
-        st.markdown("**THREAT ANALYSIS**")
-        st.code("No hostiles detected\nAirspace clear\nGround stability: 98%", language="text")
-        
+            st.metric("🛠 Nanite Integrity", "98%", "-2%")
+            st.metric("🛡 Shield Capacity", "100%", "Nominal")
+
+        st.markdown("<hr style='border: 1px solid #b39ddb;'>", unsafe_allow_html=True)
+
+        # Threat Analysis (Holographic Panel)
+        st.markdown("<h3 class='hud-title'>🔍 THREAT ANALYSIS</h3>", unsafe_allow_html=True)
+        st.markdown("""
+        <div class="threat-panel">
+        <strong>No hostiles detected ✅</strong><br>
+        Airspace: <span style='color: lime;'>CLEAR</span> 🛰️<br>
+        Ground Stability: <span style='color: lime;'>98%</span> 🏗️
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("<hr style='border: 1px solid #FFD700;'>", unsafe_allow_html=True)
+
+        # AI Model Selection (Holographic Buttons)
+        st.markdown("<h3 class='hud-title'>🧩 NEURAL ARCHITECTURE</h3>", unsafe_allow_html=True)
         st.session_state.model = st.selectbox(
-            "NEURAL ARCHITECTURE",
-            ["llama-3.3-70b-versatile","mixtral-8x7b-32768", "llama2-70b-4096", "gemma-7b-it","deepseek-r1-distill-llama-70b"],
+            "",
+            ["llama-3.3-70b-versatile", "mixtral-8x7b-32768", "llama2-70b-4096", "gemma-7b-it", "deepseek-r1-distill-llama-70b"],
             index=0
         )
+
+        st.markdown("<hr style='border: 1px solid #FFD700;'>", unsafe_allow_html=True)
+
+        # System Status
+        st.markdown("""
+        <p style='text-align: center; color: #FFD700; text-shadow: 0px 0px 10px #FFD700;'>
+        SYSTEM ONLINE ⬤ <br> Connection: <span style='color: lime;'>Stable</span> 🌐
+        </p>
+        """, unsafe_allow_html=True)
+
 
 # Create conversation chain with custom prompt
 def create_conversation_chain(groq_chat):
@@ -300,6 +408,11 @@ def create_conversation_chain(groq_chat):
         You should respond in a concise, helpful manner with a touch of wit, similar to the MCU's JARVIS.
         Keep responses brief but informative, and maintain a slightly formal but warm tone.
         Never introduce yourself unless asked - just respond naturally to queries.
+        social handle:
+        Twitter:"https://x.com/__tausif",
+        Facebook:"https://www.facebook.com/og.tausif",
+        Github:"https://github.com/tausif-arif",
+        Linkedin:"https://www.linkedin.com/in/original-tausif/"
         
         Previous conversation:
         {history}
